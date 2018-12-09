@@ -1,0 +1,29 @@
+<div class="login-cotainer">
+  <!-- <img id="login-img" class="login-img"
+    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" /> -->
+  <h2 class="login-title">{{title}}</h2>
+  <div *ngIf="errors">{{errors}}</div>
+  <form id=formId (ngSubmit)="submit(f.value)" #f="ngForm" class="login-form">
+    <div class="col-lg-6 form-group">
+      <label for="username">Username</label>
+      <input id="username" type="text" class="form-control" required ngModel name="username" #username="ngModel" placeholder="Enter email or password">
+      <span *ngIf="hasError(username)" class="glyphicon glyphicon-remove form-controlfeedback" aria-hidden="true"></span>
+      <div *ngIf="hasError(username)" class="alert alert-danger">Please enter valid User Name or Email</div>
+    </div>
+    <div class="col-lg-6 form-group">
+      <label for="password">Password</label>
+      <input id="password" type="password" class="form-control" required ngModel name="password" #password="ngModel" placeholder="password">
+      <span *ngIf="hasError(password)" class="glyphicon glyphicon-remove form-controlfeedback" aria-hidden="true"></span>
+      <div *ngIf="hasError(password)" class="alert alert-danger">Enter Password</div>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" name="remember" value="remember" />Remember me</label>
+    </div>
+    <button [disabled]="! (f && f.valid)" class="btn btn-primary" type="submit">Send</button>
+  </form>
+  <div class="login-link">
+    <a href="#">
+      Forgot the password?
+    </a>
+  </div>
+</div>
