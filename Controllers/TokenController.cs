@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -19,8 +20,9 @@ namespace ProductsStore.Controllers
     {
         public TokenController(AppDbContext context, 
             UserManager<ApplicationUser> userManager, 
-            RoleManager<IdentityRole> roleManager, 
-            IOptions<JwtOptions> options): base(context, userManager, roleManager, options)
+            RoleManager<IdentityRole> roleManager,
+            IMapper mapper, 
+            IOptions<JwtOptions> options): base(context, userManager, roleManager, mapper, options)
         {
             
         }

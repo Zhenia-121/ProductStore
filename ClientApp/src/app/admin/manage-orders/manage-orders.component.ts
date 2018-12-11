@@ -9,7 +9,5 @@ export class ManageOrdersComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

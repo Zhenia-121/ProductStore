@@ -1,3 +1,24 @@
-<p>
-  manage-products works!
-</p>
+<h1>Products</h1>
+<button class="btn btn-primary" type="submit" [routerLink]="['/create-product']" routerLinkActive="router-link-active">New Product</button>
+<form class="form-inline my-2 my-lg-6">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Price</th>
+      <th>Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td> {{ product.id }}</td>
+      <td>{{ product.title }}</td>
+      <td>${{ product.price}}</td>
+      <td><a [routerLink]="['/create-product', product.id]">Edit</a></td>
+    </tr>
+  </tbody>
+</table>

@@ -15,6 +15,10 @@ using ProductsStore.Data.ConfigurationOptions;
 using ProductsStore.Data.Models;
 using ProductsStore.Data.Persistense;
 using System.Text;
+using AutoMapper;
+using ProductsStore.ClientApp.Infrastructure.Mapping;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
 
 namespace ProductsStore
 {
@@ -30,9 +34,27 @@ namespace ProductsStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            
             services.AddCors();
 
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+             
+            IMapper mapper = mappingConfig.CreateMapper();
+
+
+            services.AddSingleton(mapper);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressConsumesConstraintForFormFileParameters = true;
+                options.SuppressInferBindingSourcesForParameters = true;
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
             // Настройка параметров и DI
             services.AddOptions();
             services.Configure<InitialConfigurationData>(Configuration.GetSection("Data"));
@@ -62,15 +84,18 @@ namespace ProductsStore
             .AddEntityFrameworkStores<AppDbContext>();
             // In production, the Angular files will be served from this directory
 
-            services.AddAuthentication(opts => {
+            services.AddAuthentication(opts =>
+            {
                 opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(cfg => {
+            .AddJwtBearer(cfg =>
+            {
                 cfg.RequireHttpsMetadata = false;
                 cfg.SaveToken = true;
-                cfg.TokenValidationParameters = new TokenValidationParameters() {
+                cfg.TokenValidationParameters = new TokenValidationParameters()
+                {
                     ValidAudience = jwtOptions.Audience,
                     ValidIssuer = jwtOptions.Issuer,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Secret)),
@@ -79,7 +104,7 @@ namespace ProductsStore
                     RequireExpirationTime = true,
                     ValidateIssuer = true,
                     ValidateIssuerSigningKey = true,
-                    ValidateAudience = true 
+                    ValidateAudience = true
                 };
             });
 
@@ -90,14 +115,20 @@ namespace ProductsStore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider, IOptions<InitialConfigurationData> options)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider, IOptions<InitialConfigurationData> options, ILoggerFactory loggerFactory)
         {
-            app.UseCors(builder => { 
+            
+            app.UseCors(builder =>
+            {
                 builder.AllowAnyOrigin();
                 builder.AllowAnyHeader();
                 builder.AllowAnyMethod();
                 builder.AllowCredentials();
-                });
+                builder.SetPreflightMaxAge(TimeSpan.FromSeconds(1000));
+                // builder.SetPreflightMaxAge(TimeSpan.FromSeconds(1));
+            });
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -111,7 +142,7 @@ namespace ProductsStore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-            
+
 
 
             app.UseAuthentication();
@@ -122,7 +153,7 @@ namespace ProductsStore
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-            
+
             // AppDbContext.AddAdminRoleandUsers(app.ApplicationServices, options).Wait();
             AppDbContext.AddAdminRoleandUsers(serviceProvider, options).Wait();
 
