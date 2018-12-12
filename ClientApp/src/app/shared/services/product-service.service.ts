@@ -52,8 +52,9 @@ export class ProductService {
         return new Observable<Product>(null);
     }));
   }
-  getProducts(): Observable<Product[]> {
-    return this.http.get(this.url).pipe(
+  getProducts(query: any = null): Observable<Product[]> {
+    console.log(this.getQueryString(query));
+    return this.http.get(this.url + this.getQueryString(query)).pipe(
       map(products => {
         return <Product[]> products;
     }),
@@ -71,6 +72,13 @@ export class ProductService {
           return error;
         })
       );
+  }
+
+  private getQueryString(queryObject: any): string {
+    if (queryObject == null) {
+      return '';
+    }
+    return '?' + Object.keys(queryObject).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(queryObject[key])).join('&');
   }
 
 }

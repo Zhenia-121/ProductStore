@@ -9,13 +9,33 @@ import { ProductService } from '../../shared/services/product-service.service';
 })
 export class ManageProductsComponent implements OnInit {
 
+  queryObject: any = {};
   products: Product[];
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService) {
+    this.queryObject.isAscending = true;
+   }
 
   ngOnInit() {
-    this.productService.getProducts().subscribe((result: Product[]) => {
+    // this.productService.getProducts().subscribe((result: Product[]) => {
+    //   this.products = result;
+    // }, error => console.log(error));
+    this.getProducts();
+  }
+  changeSortField(field: string) {
+    if (this.queryObject.sortBy === field) {
+      this.queryObject.isAscending = !this.queryObject.isAscending;
+    } else {
+      this.queryObject.isAscending = true;
+    }
+    this.queryObject.sortBy = field;
+    this.getProducts();
+  }
+
+  getProducts() {
+    this.productService.getProducts(this.queryObject).subscribe((result: Product[]) => {
       this.products = result;
     }, error => console.log(error));
   }
+
 
 }

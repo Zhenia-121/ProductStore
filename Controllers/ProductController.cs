@@ -102,9 +102,7 @@ namespace ProductsStore.Controllers
 
             // filtering
             if (!String.IsNullOrWhiteSpace(queryObj.Title))
-            {
                 query = query.Where(p => p.Title == queryObj.Title);
-            }
 
             var columnsMap = new Dictionary<string, Expression<Func<Product, object>>>() {
                 ["Title"] = p => p.Title,

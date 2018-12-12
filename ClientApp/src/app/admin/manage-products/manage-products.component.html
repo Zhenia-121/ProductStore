@@ -8,14 +8,14 @@
   <thead>
     <tr>
       <th>#</th>
-      <th>Title</th>
-      <th>Price</th>
-      <th>Edit</th>
+      <th (click)="changeSortField('Title')">Title </th>
+      <th (click)="changeSortField('Price')">Price </th>
+      <th><span class="glyphicon-sort-by-alphabet"></span>  Edit</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let product of products">
-      <td> {{ product.id }}</td>
+      <td>{{ product.id }}</td>
       <td>{{ product.title }}</td>
       <td>${{ product.price}}</td>
       <td><a [routerLink]="['/create-product', product.id]">Edit</a></td>
