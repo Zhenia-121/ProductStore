@@ -11,10 +11,11 @@ namespace ProductsStore.Data.Models
         public Contact Contact { get; set; }
 
         // public ICollection<OrdersProducts> Products { get; set; }
+        public int ShoppingCartId { get; set; }
+        public ShoppingCart Cart { get; set; }
 
-        // public int OrdersProductsId { get; set; }
-
-        // public int ApplicationUserId { get; set; }
+        public int ApplicationUserId { get; set; }
+        public ApplicationUser User { get; set; }
 
     }
 }

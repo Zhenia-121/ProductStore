@@ -18,11 +18,11 @@ namespace ProductsStore.Data.Models
 
         public Category Category { get; set; }
 
-        // public ICollection<OrdersProducts> Orders { get; set; }
+        public ICollection<ShoppingCartProduct> ShoppingCarts { get; set; }
 
         public Product()
         {
-            // Orders = new List<OrdersProducts>();
+            ShoppingCarts = new List<ShoppingCartProduct>();
         }
     }
 }

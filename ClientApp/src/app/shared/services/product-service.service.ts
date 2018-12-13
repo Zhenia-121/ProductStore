@@ -78,7 +78,6 @@ export class ProductService {
     if (queryObject == null) {
       return '';
     }
-    return '?' + Object.keys(queryObject).map(key => encodeURIComponent(key) + '=' + encodeURIComponent(queryObject[key])).join('&');
+    return '?' + Object.keys(queryObject).map(key => encodeURIComponent(key) + '=' + queryObject[key]).join('&');
   }
-
 }

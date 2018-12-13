@@ -100,10 +100,14 @@ namespace ProductsStore.Controllers
 
             var query = _context.Products.Include(p => p.Category).AsQueryable();
 
-            // filtering
+            // filtering by title
             if (!String.IsNullOrWhiteSpace(queryObj.Title))
                 query = query.Where(p => p.Title == queryObj.Title);
-
+            
+            //filter by category
+            if (!String.IsNullOrWhiteSpace(queryObj.Category))
+                query = query.Where(p => p.Category.Name == queryObj.Category);
+            
             var columnsMap = new Dictionary<string, Expression<Func<Product, object>>>() {
                 ["Title"] = p => p.Title,
                 ["Price"] = p => p.Price

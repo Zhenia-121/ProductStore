@@ -18,7 +18,6 @@ import { ManageProductsComponent } from './admin/manage-products/manage-products
 import { OrdersComponent } from './orders/orders.component';
 import { BsNavmenuComponent } from './bs-navmenu/bs-navmenu.component';
 import { CheckOutComponent } from './check-out/check-out.component';
-import { ProductsComponent } from './products/products.component';
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { LoginComponent } from './auth/components/login/login.component';
 import { NoAccessComponent } from './no-access/no-access.component';
@@ -26,6 +25,9 @@ import { AuthGuard } from './shared/guards/AuthGuard';
 import { CreateProductComponent } from './admin/create-product/create-product.component';
 import { PaginationComponent } from './shared/components/pagination/pagination.component';
 import { CustomFormsModule } from 'ng2-validation';
+import { ProductCardComponent } from './product-card/product-card.component';
+import { ProductCatalogComponent } from './products/product-catalog/product-catalog.component';
+import { ProductFilterComponent } from './products/product-filter/product-filter.component';
 
 @NgModule({
   declarations: [
@@ -40,10 +42,12 @@ import { CustomFormsModule } from 'ng2-validation';
     BsNavmenuComponent,
     LoginComponent,
     CheckOutComponent,
-    ProductsComponent,
     NoAccessComponent,
     CreateProductComponent,
-    PaginationComponent
+    PaginationComponent,
+    ProductCardComponent,
+    ProductCatalogComponent,
+    ProductFilterComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -53,7 +57,9 @@ import { CustomFormsModule } from 'ng2-validation';
     FormsModule,
     CustomFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      // { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: ProductCatalogComponent},
+      { path: 'products', component: ProductCatalogComponent},
       { path: 'shopping-cart', component: ShoppingCartComponent },
       { path: 'manage-orders', component: ManageOrdersComponent, canActivate: [ AuthGuard, AdminGuard] },
       { path: 'manage-products', component: ManageProductsComponent, canActivate: [AuthGuard, AdminGuard] },

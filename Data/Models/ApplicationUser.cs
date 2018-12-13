@@ -10,7 +10,7 @@ namespace ProductsStore.Data.Models
         #region Constructor
         public ApplicationUser()
         {
-            // Orders = new List<Order>();
+            Orders = new List<Order>();
         }
         #endregion
 
@@ -31,6 +31,9 @@ namespace ProductsStore.Data.Models
 
         [Required]
         public DateTime LastModifiedDate { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
+
         #endregion    
     }
 }
