@@ -22,8 +22,8 @@ export class CreateProductComponent implements OnInit {
     private categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router) {
-      this.product = new Product();
-    }
+    this.product = new Product();
+  }
 
   ngOnInit() {
     // const categories$ = this.categoryService.getCategories();
@@ -59,10 +59,11 @@ export class CreateProductComponent implements OnInit {
   }
   delete() {
     if (this.productId) {
-      this.productService.deleteProduct(this.productId).subscribe(result => {
-        console.log('Deleted Product id' + result);
-        this.router.navigate(['/manage-products']);
-      });
+      if (!confirm('Are you sure you want to delete product?')) { return; }
+        this.productService.deleteProduct(this.productId).subscribe(result => {
+          console.log('Deleted Product id' + result);
+          this.router.navigate(['/manage-products']);
+        });
     }
   }
 

@@ -1,38 +1,49 @@
 <div class="container">
   <div class="row">
-    <div class="col-6">
-      <p>{{ f.value | json }}</p>
+    <div class="col-lg-6">
       <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
         <div class="form-group">
           <label for="title">Title</label>
-          <input type="text" id="title" name="title" [(ngModel)]="product.title" class="form-control" placeholder="Title">
+          <input type="text" required #title="ngModel" id="title" name="title" [(ngModel)]="product.title" class="form-control" placeholder="Title">
+          <div class="alert alert-danger" *ngIf="title.touched && title.invalid">Title is required</div>
         </div>
         <div class="form-group">
             <label for="price">Price</label>
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">$</span>
-                <input type="number" id="price" name="price" [(ngModel)]="product.price" class="form-control" placeholder="Price">
+                <input type="number" #price="ngModel" id="price" name="price" [(ngModel)]="product.price" class="form-control" placeholder="Price" required [min]="0">
+            </div>
+            <div class="alert alert-danger" *ngIf="price.touched && price.invalid">
+              <div *ngIf="price.errors?.required">Price is required</div>
+              <div *ngIf="price.errors?.min">Price should be minimum 0$</div>
             </div>
         </div>
         <div class="form-group">
           <label for="category">Category</label>
-            <select name="categoryId" id="category" class="form-control" [(ngModel)]="product.categoryId">
-              <option *ngFor="let category of categories" value="{{ category.id }}">{{ category.name }}</option>
-            </select>
+          <select name="categoryId" requried #category="ngModel" id="category" class="form-control" [(ngModel)]="product.categoryId">
+            <option *ngFor="let category of categories" value="{{ category.id }}">{{ category.name }}</option>
+          </select>
+          <div class="alert alert-danger" *ngIf="category.touched && category.invalid">Category is required</div>
         </div>
         <div class="form-group">
           <label for="imageUrl">Image Url</label>
-          <input type="url" id="imageUrl" name="url" [(ngModel)]="product.url" class="form-control" placeholder="Image Url">
+          <input type="url"  #url="ngModel" id="imageUrl" name="url" [(ngModel)]="product.url" class="form-control" placeholder="Image Url" required url>
+          <div class="alert alert-danger" *ngIf="url.touched && url.invalid">
+            <div *ngIf="price.errors?.required">Image url is required</div>
+            <div *ngIf="price.errors?.url">It is wrong url path</div>
+          </div>
         </div>
         <button type="submit" class="btn btn-primary">Save</button>
         <button type="reset" (click)="delete()" class="btn btn-danger">Delete</button>
       </form>
     </div>
-    <div class="col-6">
-      <div>
-        <img [src]="f.value.url" alt="">
-        <p>{{ f.value.title }}</p>
-        <p>${{ f.value.price }} </p>
+    <div *ngIf="productId" class="col-lg-6">
+      <div class="card" style="width: 20rem;">
+        <img class="card-img-top" [src]="f.value.url" alt="" *ngIf="product.url">
+        <div class="card-body">
+          <h4 class="card-title">{{ product.title }}</h4>
+          <p class="card-text">{{ product.price | currency:'USD':true }}</p>
+        </div>
       </div>
     </div>
   </div>

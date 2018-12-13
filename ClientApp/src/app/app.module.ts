@@ -24,6 +24,8 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { NoAccessComponent } from './no-access/no-access.component';
 import { AuthGuard } from './shared/guards/AuthGuard';
 import { CreateProductComponent } from './admin/create-product/create-product.component';
+import { PaginationComponent } from './shared/components/pagination/pagination.component';
+import { CustomFormsModule } from 'ng2-validation';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { CreateProductComponent } from './admin/create-product/create-product.co
     CheckOutComponent,
     ProductsComponent,
     NoAccessComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,6 +51,7 @@ import { CreateProductComponent } from './admin/create-product/create-product.co
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    CustomFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'shopping-cart', component: ShoppingCartComponent },

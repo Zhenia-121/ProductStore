@@ -1,0 +1,16 @@
+.pagination-box {
+  position: relative;
+  margin-top: -10px;
+}
+.pagination-limit {
+  margin-right: 25px;
+  display: inline-table;
+  width: 150px;
+}
+.pagination-page {
+  width: 110px;
+  display: inline-table;
+  text-align: right;
+  box-align: right;
+  /* display: inline-block; */
+}

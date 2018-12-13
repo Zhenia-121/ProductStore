@@ -16,7 +16,7 @@ using ProductsStore.Data.Models;
 using ProductsStore.Data.Persistense;
 using System.Text;
 using AutoMapper;
-using ProductsStore.ClientApp.Infrastructure.Mapping;
+using ProductsStore.Infrastructure.Mapping;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 

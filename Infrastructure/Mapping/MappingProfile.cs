@@ -2,7 +2,7 @@ using AutoMapper;
 using ProductsStore.Controllers.Dto;
 using ProductsStore.Data.Models;
 
-namespace ProductsStore.ClientApp.Infrastructure.Mapping
+namespace ProductsStore.Infrastructure.Mapping
 {
     public class MappingProfile: Profile
     {

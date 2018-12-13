@@ -1,20 +1,22 @@
 <h1>Products</h1>
-<button class="btn btn-primary" type="submit" [routerLink]="['/create-product']" routerLinkActive="router-link-active">New Product</button>
-<form class="form-inline my-2 my-lg-6">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+<button class="btn btn-primary" type="submit" [routerLink]="['/create-product']" routerLinkActive="router-link-active">New
+  Product</button>
+<form class="form-inline my-2 my-lg-6" #f="ngForm" (ngSubmit)="filter(f.value.title)">
+  <input class="form-control mr-sm-2" type="search" #title="ngModel" name="title" placeholder="Search" (keyup)="fluentFilter(title.value)"
+    ngModel aria-label="Search">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 </form>
 <table class="table table-bordered">
   <thead>
     <tr>
       <th>#</th>
-      <th (click)="changeSortField('Title')">Title </th>
-      <th (click)="changeSortField('Price')">Price </th>
-      <th><span class="glyphicon-sort-by-alphabet"></span>  Edit</th>
+      <th (click)="changeSortField('Title')">Title <span class="fas fa-github-squares"></span></th>
+      <th (click)="changeSortField('Price')">Price <i class="fas fa-sort-desc"></i></th>
+      <th><span class="glyphicon-sort-by-alphabet"></span> Edit</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let product of products">
+    <tr *ngFor="let product of filteredProducts">
       <td>{{ product.id }}</td>
       <td>{{ product.title }}</td>
       <td>${{ product.price}}</td>
@@ -22,3 +24,18 @@
     </tr>
   </tbody>
 </table>
+<div class="pagination-box">
+  <div class="pagination-limit">
+      <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Page size</span>
+          </div>
+          <input #limitInput type="number" class="form-control" min="1" step="1"
+                             [ngModel]="limit" (blur)="limit = limitInput.value; changePageSize(limitInput.value)"
+                             (keyup.enter)="limit = limitInput.value" (keyup.esc)="limitInput.value = limit"/>
+        </div>
+  </div>
+  <div class="pagination-page">
+      <app-pagination [page-size]="queryObject.pageSize" total-count="14" (changePage)="applyPageChanging($event)"></app-pagination>
+  </div>
+</div>
