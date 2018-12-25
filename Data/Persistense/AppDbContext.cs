@@ -20,7 +20,11 @@ namespace ProductsStore.Data.Persistense
 
         public DbSet<Category> Categories { get; set; }
 
-        // public DbSet<OrdersProducts> OrdersProducts { get; set; }
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
+        public DbSet<ShoppingCartProduct> ShoppingCartsProducts { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
@@ -29,17 +33,19 @@ namespace ProductsStore.Data.Persistense
 
             base.OnModelCreating(builder);
 
-            // builder.Entity<Order>().ToTable("Orders");
-            // builder.Entity<Order>().HasMany(o => o.Products).WithOne(op => op.Order);
-            // builder.Entity<Order>().OwnsOne(o => o.Contact);
+            builder.Entity<Order>().ToTable("Orders");
+            builder.Entity<Order>().OwnsOne(o => o.Contact);
+            builder.Entity<Order>().HasOne(o => o.User).WithMany(u => u.Orders).HasForeignKey(o => o.UserId);
+            // builder.Entity<Order>().HasOne(o => o.Cart)
 
             builder.Entity<Product>().ToTable("Products");
-            // builder.Entity<Product>().HasMany(p => p.Orders).WithOne(op => op.Product);
+            builder.Entity<Product>().HasMany(p => p.ShoppingCarts).WithOne(op => op.Product);
             builder.Entity<Product>().HasOne(p => p.Category).WithMany(c => c.Products);
 
-            // builder.Entity<OrdersProducts>().ToTable(nameof(OrdersProducts));
-            // builder.Entity<OrdersProducts>().HasOne(op => op.Product).WithMany(p => p.Orders);
-            // builder.Entity<OrdersProducts>().HasOne(op => op.Order).WithMany(o => o.Products);
+            builder.Entity<ShoppingCartProduct>().ToTable(nameof(ShoppingCartsProducts));
+            builder.Entity<ShoppingCartProduct>().HasKey(scp => new { scp.ProductId, scp.ShoppingCartId });
+            builder.Entity<ShoppingCartProduct>().HasOne(scp => scp.Product).WithMany(p => p.ShoppingCarts).HasForeignKey(scp => scp.ProductId);
+            builder.Entity<ShoppingCartProduct>().HasOne(scp => scp.Cart).WithMany(sc => sc.Products).HasForeignKey(scp => scp.ShoppingCartId);
 
             builder.Entity<Category>().ToTable("Categories");
 

@@ -8,7 +8,7 @@ namespace ProductsStore.Data.Models
 
         public Product Product { get; set; }
 
-        public ShoppingCart Order { get; set; }
+        public ShoppingCart Cart { get; set; }
 
         public int Quantity { get; set; }
     }

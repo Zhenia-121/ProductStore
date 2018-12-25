@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ProductsStore.Data.Models
@@ -6,6 +7,7 @@ namespace ProductsStore.Data.Models
     {
         public int Id { get; set; }
 
+        public DateTime DateCreated { get; set; }
         public int? OrderId { get; set; }
 
         public ICollection<ShoppingCartProduct> Products { get; set; }
