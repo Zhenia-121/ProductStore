@@ -28,6 +28,7 @@ import { CustomFormsModule } from 'ng2-validation';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductCatalogComponent } from './products/product-catalog/product-catalog.component';
 import { ProductFilterComponent } from './products/product-filter/product-filter.component';
+import { ProductQuantityComponent } from './products/product-quantity/product-quantity.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ProductFilterComponent } from './products/product-filter/product-filter
     PaginationComponent,
     ProductCardComponent,
     ProductCatalogComponent,
-    ProductFilterComponent
+    ProductFilterComponent,
+    ProductQuantityComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

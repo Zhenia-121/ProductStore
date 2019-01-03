@@ -1,6 +1,8 @@
+import { ShoppingCart } from './../shared/models/ShoppingCart';
+import { ShoppingCartService } from './../shared/services/shopping-cart.service';
 import { Observable } from 'rxjs';
 import { AuthService } from './../auth/services/auth-service.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-bs-navmenu',
@@ -9,9 +11,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BsNavmenuComponent implements OnInit {
   userName$: Observable<string>;
-  constructor(private authService: AuthService) {
+  cart$: Observable<ShoppingCart>;
+  // cart: ShoppingCart;
+
+  constructor(
+    private authService: AuthService,
+    private cartService: ShoppingCartService) {
    }
   ngOnInit() {
+    this.cart$ = this.cartService.cart;
+    this.cartService.getShoppingCart();
   }
 
   logout() {
@@ -21,6 +30,5 @@ export class BsNavmenuComponent implements OnInit {
   isAdmin() {
     return this.authService.isAdmin();
   }
-
 
 }

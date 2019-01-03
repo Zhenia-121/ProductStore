@@ -12,13 +12,17 @@ export class ProductCardComponent {
   @Input('product') product: Product;
   // tslint:disable-next-line:no-input-rename
   @Input('show-actions') showActions = true;
-  constructor(private shoppingCartService: ShoppingCartService) { }
-
-  addToCart(productId: number) {
-    this.shoppingCartService.addProductToCart(productId).subscribe(result => console.log(result));
+  @Input('countInCart') countInCart: number;
+  constructor(private shoppingCartService: ShoppingCartService) {
   }
 
-  deleteFromCart(productId: number) {
-    this.shoppingCartService.deleteProductFromCart(productId).subscribe(result => console.log(result));
+  addToCart() {
+    this.shoppingCartService.addProductToCart(this.product.id).subscribe(result => {
+      this.countInCart += 1;
+      console.log(result);
+    });
+  }
+  changeCount($event) {
+    this.countInCart += $event;
   }
 }

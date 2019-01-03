@@ -6,8 +6,8 @@
      <div class="col">
        <div class="row">
          <ng-container *ngFor="let product of products; index as i">
-           <div class="col">
-             <product-card [product]="product" show-actions="true">
+           <div class="col" *ngIf="shoppingCart$ | async as shoppCart">
+             <product-card [product]="product" [countInCart]="shoppCart.getQuantity(product.id)" show-actions="true">
              </product-card>
            </div>
            <div *ngIf="(i+1)%2 == 0" class="w-100"></div>

@@ -1,7 +1,15 @@
+import { Product } from './Product';
 export class CartItem {
-  productId: number;
+  constructor (public product: CartItem) {
+    Object.assign(this, product);
+  }
+  id: number;
   price: number;
   title: string;
-  quantity: number;
   url: string;
+  quantity: number;
+
+  get totalPrice() {
+    return this.quantity * this.price;
+  }
 }

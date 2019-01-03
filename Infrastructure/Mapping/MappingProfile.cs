@@ -13,7 +13,7 @@ namespace ProductsStore.Infrastructure.Mapping
             CreateMap<Category, CategoryDto>();
             CreateMap<ShoppingCart, ShoppingCartDto>();
             CreateMap<ShoppingCartProduct, CartItemDto>()
-                .ForMember(pd => pd.ProductId, opts => opts.MapFrom(scp => scp.ProductId))
+                .ForMember(pd => pd.Id, opts => opts.MapFrom(scp => scp.ProductId))
                 .ForMember(pd => pd.Price, opts => opts.MapFrom(scp => scp.Product.Price))
                 .ForMember(pd => pd.Title, opts => opts.MapFrom(scp => scp.Product.Title))
                 .ForMember(pd => pd.Url, opts => opts.MapFrom(scp => scp.Product.Url));
