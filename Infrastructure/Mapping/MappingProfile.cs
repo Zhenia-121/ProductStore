@@ -12,6 +12,7 @@ namespace ProductsStore.Infrastructure.Mapping
             CreateMap<Product, ProductDto>();
             CreateMap<Category, CategoryDto>();
             CreateMap<ShoppingCart, ShoppingCartDto>();
+            CreateMap<Order, OrderDto>();
             CreateMap<ShoppingCartProduct, CartItemDto>()
                 .ForMember(pd => pd.Id, opts => opts.MapFrom(scp => scp.ProductId))
                 .ForMember(pd => pd.Price, opts => opts.MapFrom(scp => scp.Product.Price))
@@ -20,6 +21,7 @@ namespace ProductsStore.Infrastructure.Mapping
 
             // From Dto/Api-Resources to domain model
             CreateMap<SaveProductDto, Product>();
+            CreateMap<SaveOrderDto, Order>();
             CreateMap<ProductQueryDto, ProductQuery>();
         }
     }

@@ -31,7 +31,12 @@ export class ShoppingCartService {
   }
 
   createCart(productId: number) {
-    const query = this.getQueryString({ productId: productId });
+    let query;
+    if (productId != null) {
+      query = this.getQueryString({ productId: productId });
+    } else {
+      query = '';
+    }
     console.log(query);
     return this.htppClient.post(this.url + query, {})
       .pipe(
@@ -77,6 +82,9 @@ export class ShoppingCartService {
   }
   deleteProductFromCart(productId: number) {
     return this.changeCart(productId, 'delete');
+  }
+  deleteCart() {
+    localStorage.removeItem(this.shoppingCart);
   }
   clearCart() {
     return this.changeCart(0, 'clear');

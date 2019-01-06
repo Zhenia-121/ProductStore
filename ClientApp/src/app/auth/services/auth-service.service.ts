@@ -9,9 +9,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
 
-  clientId = 'ProductStore';
-  authKey = 'access_token ' + this.clientId;
-  url = 'http://localhost:5000/';
+  private clientId = 'ProductStore';
+  private authKey = 'access_token ' + this.clientId;
+  private url = 'http://localhost:5000/';
 
   constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) { }
 
@@ -71,6 +71,10 @@ export class AuthService {
   public getUserName(): string {
     const userName = this.decodeJwtToken().Name;
     return userName;
+  }
+  public getUserId() {
+    const userId = this.decodeJwtToken().Id;
+    return userId;
   }
   public isAdmin(): boolean {
     // if (!this.isLoggedIn()) {

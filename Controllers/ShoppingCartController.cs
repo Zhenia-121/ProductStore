@@ -28,30 +28,29 @@ namespace ProductsStore.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> CreateCart([FromQuery] int productId)
+        public async Task<ActionResult<int>> CreateCart([FromQuery] int? productId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            var product = await _context.Products.FindAsync(productId);
-            if (product == null) {
-                ModelState.AddModelError("Find product error", $"Product with id {productId} wasn't find");
-                return BadRequest(ModelState);
-            }
-                
-
             var newCart = new ShoppingCart() {
                 DateCreated = DateTime.Now
             };
 
-            newCart.Products.Add(new ShoppingCartProduct() {
+            if (productId != null) {
+                var product = await _context.Products.FindAsync(productId);
+                if (product == null) {
+                    ModelState.AddModelError("Find product error", $"Product with id {productId} wasn't find");
+                    return BadRequest(ModelState);
+                }
+                newCart.Products.Add(new ShoppingCartProduct() {
                         Product = product,
                         // ProductId = productId,
                         Quantity = 1
-            });
-
+                });
+            }
+                                         
             var createResult = await _context.ShoppingCarts.AddAsync(newCart);
             if (createResult.State != EntityState.Added)
             {

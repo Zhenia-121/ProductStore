@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,7 +16,7 @@ namespace ProductsStore.Data.Models
         [ForeignKey("Cart")]
         public int ShoppingCartId { get; set; }
         public ShoppingCart Cart { get; set; }
-
+        public DateTime OrderTime { get; set; }
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 

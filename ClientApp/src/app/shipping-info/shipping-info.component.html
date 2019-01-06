@@ -1,0 +1,35 @@
+<form (submit)="sendOrder()" #f="ngForm">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input #name=ngModel required class="form-control" [ngClass]="{'is-invalid': name.invalid && name.touched}" id="name"
+      name="name" type="text" [(ngModel)]="order.contact.name" placeholder="Name">
+    <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
+      <div *ngIf="name.errors.required">Name is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="city">City</label>
+    <input #city=ngModel required class="form-control" id="city" name="city" type="text" [ngClass]="{'is-invalid': city.invalid && city.touched}"
+      [(ngModel)]="order.contact.city" placeholder="City">
+    <div class="alert alert-danger" *ngIf="city.touched && city.invalid">
+      <div *ngIf="city.errors.required">City is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="street">Street</label>
+    <input #street=ngModel required class="form-control" id="street" name="street" type="text" [ngClass]="{'is-invalid': street.invalid && street.touched}"
+      [(ngModel)]="order.contact.street" placeholder="Street">
+    <div class="alert alert-danger" *ngIf="street.touched && street.invalid">
+      <div *ngIf="street.errors.required">Street is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="homeNumber">Home Number</label>
+    <input #homeNumber=ngModel required class="form-control" type="number" id="homeNumber" name="homeNumber" [ngClass]="{'is-invalid': homeNumber.invalid && homeNumber.touched}"
+      [(ngModel)]="order.contact.homeNumber" placeholder="Home Number">
+    <div class="alert alert-danger" *ngIf="homeNumber.touched && homeNumber.invalid">
+      <div *ngIf="homeNumber.errors.required">Street is required</div>
+    </div>
+  </div>
+  <button [disabled]="!f.valid" type="submit" class="btn btn-primary">Place Order</button>
+</form>

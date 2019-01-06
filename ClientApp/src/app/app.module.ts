@@ -29,6 +29,8 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductCatalogComponent } from './products/product-catalog/product-catalog.component';
 import { ProductFilterComponent } from './products/product-filter/product-filter.component';
 import { ProductQuantityComponent } from './products/product-quantity/product-quantity.component';
+import { ShoppingCartSummaryComponent } from './shopping-cart-summary/shopping-cart-summary.component';
+import { ShippingInfoComponent } from './shipping-info/shipping-info.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { ProductQuantityComponent } from './products/product-quantity/product-qu
     ProductCardComponent,
     ProductCatalogComponent,
     ProductFilterComponent,
-    ProductQuantityComponent
+    ProductQuantityComponent,
+    ShoppingCartSummaryComponent,
+    ShippingInfoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -68,7 +72,7 @@ import { ProductQuantityComponent } from './products/product-quantity/product-qu
       { path: 'create-product', component: CreateProductComponent, canActivate: [AuthGuard, AdminGuard] },
       { path: 'create-product/:id', component: CreateProductComponent, canActivate: [AuthGuard, AdminGuard]},
       { path: 'my-orders', component: OrdersComponent },
-      { path: 'check-out', component: CheckOutComponent },
+      { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },
       { path: 'login', component: LoginComponent},
       { path: 'order-success', component: OrderSuccessComponent},
       { path: 'no-access', component: NoAccessComponent }
